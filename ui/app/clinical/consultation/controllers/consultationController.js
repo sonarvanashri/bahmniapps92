@@ -64,32 +64,18 @@ angular.module('bahmni.clinical').controller('ConsultationController',
             _.each(clinicalDashboardConfig.tabs, setDashboardPrintAction);
             $scope.printList = _.concat(clinicalDashboardConfig.tabs, visitConfig.tabs);
             clinicalDashboardConfig.quickPrints = appService.getAppDescriptor().getConfigValue('quickPrints');
-            var clinicalDashboardUuid = '0623e3b6-8701-4c07-8493-2930bd67f11a';
-             //var prescriptionReportUuid = '2c6c27b0-3eef-4010-bfbb-9133d0016d25';
-            // var transferReportUuid = '2c6c27b0-3eef-4010-bfbb-9133d0017d45';
-            var dischargeSummuryUuid = '2c6c27b0-3eef-4010-bfbb-9133d0017f75';
-            $scope.printButtonDropdownOptions = [{
+            var clinicalDashboardUuid = '8571f01f-e39b-4d43-aecf-983cc378cf03';
+            var dischargeSummuryUuid = 'ee47b479-9096-421a-a948-861f10a116f8';
+            $scope.printButtonDropdownOptions = [
+            {
                 name: $translate.instant('PRINT_CLINICAL_DASHBOARD_LABEL'),
                 uuid: clinicalDashboardUuid
             },
-            // {
-            //     name: $translate.instant('PRESCRIPTION_REPORT_PRINT_PRESCRIPTION_LABEL'),
-            //     uuid: prescriptionReportUuid
-            // },
             {
                 name: $translate.instant('DISCHARGE_SUMMURY'),
                 uuid: dischargeSummuryUuid
             }
             ];
-
-            // if ($scope.patient['PATIENT_STATE_CHANGE']) {
-            //     if ($scope.patient['PATIENT_STATE_CHANGE'].value.display == 'Patient_Transferred_Out') {
-            //         $scope.printButtonDropdownOptions.push({
-            //             name: $translate.instant('TRANSFER_OUT_FORM'),
-            //             uuid: transferReportUuid
-            //         });
-            //     }
-            // }
 
             $scope.optionText = function (value) {
                 return value.name;
@@ -97,24 +83,11 @@ angular.module('bahmni.clinical').controller('ConsultationController',
 
             $scope.printDashboardOrPrescription = function (option)
             {
-                if (option.uuid === clinicalDashboardUuid)
+                if(option.uuid === clinicalDashboardUuid)
                 {
                     clinicalDashboardConfig.currentTab.print();
                 }
-                // else if (option.uuid === prescriptionReportUuid)
-                // {
-                //     $rootScope.isTarvReport = false;
-                //     printPrescriptionReportService.getReportModel($stateParams.patientUuid, $rootScope.isTarvReport)
-                //         .then(function (reportData)
-                //         {
-                //             $rootScope.prescriptionReportData = reportData;
-                //             printer.printFromScope("dashboard/views/printPrescriptionReport.html", $rootScope, function () { });
-                //         });
-                // }
-
-
-
-                else(option.uuid === dischargeSummuryUuid)
+                else if(option.uuid === dischargeSummuryUuid)
                 {
                     $rootScope.isTarvReport = false;
                     dischargeSummuryService.getReportModel($stateParams.patientUuid, $rootScope.isTarvReport)
@@ -123,23 +96,8 @@ angular.module('bahmni.clinical').controller('ConsultationController',
                             $rootScope.dischargeSummuryReportData = reportData;
                             printer.printFromScope("dashboard/views/dischargeSummury.html", $rootScope, function () { });
                         });
-                }
-
-
-
-                // else
-                // {
-                //     if (option.uuid === transferReportUuid)
-                //     {
-                //         $rootScope.isTarvReport = false;
-                //     }
-                //     transferOutService.getReportModel($stateParams.patientUuid, $rootScope.isTarvReport)
-                //             .then(function (reportData)
-                //             {
-                //                 $rootScope.transferReportData = reportData;
-                //                 printer.printFromScope("dashboard/views/TransferOut.html", $rootScope, function () { });
-                //             });
-                // }
+                    }
+            
             };
             $scope.allowConsultation = function ()
             {
